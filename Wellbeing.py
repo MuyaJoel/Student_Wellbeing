@@ -11,7 +11,7 @@ query="SELECT * FROM student_records; "
 
 data=pd.read_sql(query,engine)
 
-print(data)
+# print(data)
 
 
 le_payment=LabelEncoder().fit(['Paid','Partial','Unpaid'])
@@ -21,7 +21,7 @@ data['name']=LabelEncoder().fit_transform(data['name'])
 data['fee_payment_status']=le_payment.transform(data['fee_payment_status'])
 data['reporting_status']=le_reporting.transform(data['reporting_status'])
 
-print(data)
+# print(data)
 
 with open('Student_Wellbeing_Model.pkl','rb') as file:
     model=pickle.load(file)
@@ -33,11 +33,11 @@ stu_needing_assistance=data[data['needs_assistance']==1]
 
 print('Students needing assistance: \n',stu_needing_assistance[['student_id','needs_assistance']])
 
-# update database
+
 
 for _, row in stu_needing_assistance.iterrows():
     update_query= text("""
-    UPDATE student_records 
+    UPDATE student_records
     SET needs_assistance = :needs_assistance
     WHERE student_id= :student_id;
                       """)
